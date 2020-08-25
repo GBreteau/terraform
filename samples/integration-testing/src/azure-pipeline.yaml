@@ -28,6 +28,7 @@ stages:
       steps:
       # Step 1: run the Checkov Static Code Analysis
       - bash: chmod 777 $(terraformWorkingDirectory)/checkov.sh
+      - bash: echo $(terraformWorkingDirectory)
       - bash: $(terraformWorkingDirectory)/checkov.sh $(terraformWorkingDirectory)
         displayName: Checkov Static Code Analysis
       # Step 2: install Terraform on the Azure Pipelines agent
@@ -48,8 +49,7 @@ stages:
           command: validate
           workingDirectory: $(terraformWorkingDirectory)
       # Step 5: run Terraform plan to validate HCL syntax
-      - task: charleszipp.azure-pipelines-tasks-terraform.TerraformCLI@0
-      #- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+      - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
         displayName: 'Run terraform plan'
         inputs:
           command: plan
